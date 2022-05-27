@@ -1,3 +1,4 @@
+sickit-learn
 fastapi 
 uvicorn[standard]
 pydantic 
