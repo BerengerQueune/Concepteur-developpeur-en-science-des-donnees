@@ -19,7 +19,7 @@ if __name__ == "__main__":
     # Set your variables for your environment
     EXPERIMENT_NAME="car_price_estimator"
 
-    mlflow.set_tracking_uri("https://my-get-around.herokuapp.com/")
+    mlflow.set_tracking_uri("https://mlflow-get-around.herokuapp.com/")
 
     # Instanciate your experiment
     client = mlflow.tracking.MlflowClient()

@@ -1,5 +1,6 @@
 import mlflow 
 import uvicorn
+import json
 import pandas as pd 
 from pydantic import BaseModel
 from typing import Literal, List, Union
@@ -25,7 +26,7 @@ app = FastAPI(
     version="0.1",
     contact={
         "name": "GetAround",
-        "url": "https://my-get-around.herokuapp.com/",
+        "url": "https://mlflow-get-around.herokuapp.com/",
     },
     openapi_tags=tag_metadata
 )
@@ -49,7 +50,7 @@ class PredictionFeatures(BaseModel):
 @app.get("/")
 async def index():
 
-    message = "Hello this is my first API. If you want to learn more, check out documentation of the api at `/docs`"
+    message = "Hello this is my test API. If you want to learn more, check out documentation of the api at `/docs`"
 
     return message
 
@@ -62,7 +63,7 @@ async def predict(predictionFeatures: PredictionFeatures):
     car_price = pd.DataFrame(dict(predictionFeatures), index=[0])
 
     # # Log model from mlflow 
-    logged_model = 'runs:/260fbe46c96f4f8ba54fb566a9ab7447/car_price_estimator'
+    logged_model = 'runs:/65ab4ecf0eec44d09914861f2a65664c/car_price_estimator'
     
     # Load model as a PyFuncModel.
     loaded_model = mlflow.pyfunc.load_model(logged_model)
