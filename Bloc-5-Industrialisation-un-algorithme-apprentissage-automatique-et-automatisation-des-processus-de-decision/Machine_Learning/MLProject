@@ -1,6 +1,6 @@
-name: get_around_test
+name: get-around-mlflow
 docker_env:
-  image: mlflow_test4
+  image: get-around-mlflow
   environment: [
     "MLFLOW_TRACKING_URI",
     "AWS_ACCESS_KEY_ID",

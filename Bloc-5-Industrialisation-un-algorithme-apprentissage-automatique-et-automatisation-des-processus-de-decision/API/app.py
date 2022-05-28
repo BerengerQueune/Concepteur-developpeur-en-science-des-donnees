@@ -26,7 +26,7 @@ app = FastAPI(
     version="0.1",
     contact={
         "name": "GetAround",
-        "url": "https://mlflow-get-around.herokuapp.com/",
+        "url": "https://get-around-mlflow.herokuapp.com/",
     },
     openapi_tags=tag_metadata
 )
@@ -63,7 +63,7 @@ async def predict(predictionFeatures: PredictionFeatures):
     car_price = pd.DataFrame(dict(predictionFeatures), index=[0])
 
     # # Log model from mlflow 
-    logged_model = 'runs:/d625c79a687640a08655f4ba7607a8f0/car_price_estimator'
+    logged_model = 'runs:/57dcb7c903b34e0ebec0d1ccf016e65a/car_price_estimator'
     
     # Load model as a PyFuncModel.
     loaded_model = mlflow.pyfunc.load_model(logged_model)
@@ -77,4 +77,4 @@ async def predict(predictionFeatures: PredictionFeatures):
 
 
 if __name__=="__main__":
-    uvicorn.run(app, host="0.0.0.0", port=4000) # Here you define your web server to run the `app` variable (which contains FastAPI instance), with a specific host IP (0.0.0.0) and port (4000)
+    uvicorn.run(app, host="0.0.0.0", port=4000, debug=True, reload=True) # Here you define your web server to run the `app` variable (which contains FastAPI instance), with a specific host IP (0.0.0.0) and port (4000)
