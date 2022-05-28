@@ -12,3 +12,4 @@ mlflow
 psycopg2-binary
 jupyter
 openpyxl
+psutil

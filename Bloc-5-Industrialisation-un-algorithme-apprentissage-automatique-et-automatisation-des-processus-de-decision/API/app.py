@@ -63,7 +63,7 @@ async def predict(predictionFeatures: PredictionFeatures):
     car_price = pd.DataFrame(dict(predictionFeatures), index=[0])
 
     # # Log model from mlflow 
-    logged_model = 'runs:/ab944c80b6cf4d7e8732c946ff76193d/car_price_estimator'
+    logged_model = 'runs:/d625c79a687640a08655f4ba7607a8f0/car_price_estimator'
     
     # Load model as a PyFuncModel.
     loaded_model = mlflow.pyfunc.load_model(logged_model)
