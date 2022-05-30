@@ -1,4 +1,4 @@
-name: get-around-mlflow
+name: car_price_estimator
 docker_env:
   image: get-around-mlflow
   environment: [

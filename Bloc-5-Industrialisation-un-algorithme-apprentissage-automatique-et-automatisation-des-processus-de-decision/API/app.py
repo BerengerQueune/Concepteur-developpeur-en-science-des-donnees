@@ -59,16 +59,16 @@ async def predict(predictionFeatures: PredictionFeatures):
     """
     Prediction of rental price per day for a car
     """
+    import pandas as pd 
     # Read data 
     car_price = pd.DataFrame(dict(predictionFeatures), index=[0])
 
     # # Log model from mlflow 
-    logged_model = 'runs:/57dcb7c903b34e0ebec0d1ccf016e65a/car_price_estimator'
-    
+    logged_model = 'runs:/b20787929fb445e3ad0574ad722657d4/car_price_estimator'
+
     # Load model as a PyFuncModel.
     loaded_model = mlflow.pyfunc.load_model(logged_model)
     prediction = loaded_model.predict(car_price)
-
 
     # Format response
     response = {"prediction": prediction.tolist()[0]}

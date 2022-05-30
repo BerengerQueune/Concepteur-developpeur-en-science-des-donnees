@@ -18,18 +18,16 @@ if __name__ == "__main__":
 
     # Set your variables for your environment
     EXPERIMENT_NAME="car_price_estimator"
-
-    mlflow.set_tracking_uri("https://get-around-mlflow.herokuapp.com//")
-
-    # Instanciate your experiment
-    client = mlflow.tracking.MlflowClient()
-
-    # Set experiment's info 
     mlflow.set_experiment(EXPERIMENT_NAME)
-
-    # Get our experiment info
     experiment = mlflow.get_experiment_by_name(EXPERIMENT_NAME)
+
+    client = mlflow.tracking.MlflowClient()
     run = client.create_run(experiment.experiment_id) # Creates a new run for a given experiment
+
+
+
+    
+    
 
     # Call mlflow autolog
     mlflow.sklearn.autolog()
