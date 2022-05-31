@@ -34,19 +34,19 @@ app = FastAPI(
 )
 
 class PredictionFeatures(BaseModel):
-    model_key: str
-    mileage: int
-    engine_power: int
-    fuel: str
-    paint_color: str
-    car_type: str
-    private_parking_available: bool
-    has_gps: bool
-    has_air_conditioning: bool
-    automatic_car: bool
-    has_getaround_connect: bool
-    has_speed_regulator: bool
-    winter_tires: bool
+    model_key: str = "Citroën"
+    mileage: int = 140411
+    engine_power: int = 100
+    fuel: str = "diesel"
+    paint_color: str = "black"
+    car_type: str = "convertible"
+    private_parking_available: bool = True
+    has_gps: bool = True
+    has_air_conditioning: bool = False
+    automatic_car: bool = False
+    has_getaround_connect: bool = True
+    has_speed_regulator: bool = True
+    winter_tires: bool = True
 
 
 @app.get("/")

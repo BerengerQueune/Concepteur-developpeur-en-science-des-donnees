@@ -16,7 +16,6 @@ st.set_page_config(
     layout="wide"
 )
 
-
 # Importing Dataset
 @st.cache
 def load_data_pricing():
@@ -33,9 +32,6 @@ data_pricing = load_data_pricing()
 data_delay = load_data_delay()
 
 
-
-
-
 # Findind number of unique cars
 number_of_cars = len(data_delay['car_id'].unique())
 
@@ -44,9 +40,6 @@ car_average_rental_price_per_day = round(data_pricing["rental_price_per_day"].me
 
 # Finding number of rentals
 number_of_rentals = data_delay.shape[0]
-
-
-
 
 # Removing NaN values about late checkout from the dataset
 data_delay_without_nan = data_delay[data_delay["delay_at_checkout_in_minutes"].isna() == False]
@@ -65,15 +58,8 @@ data_delay_without_nan["delay"] = data_delay_without_nan["delay_at_checkout_in_m
 # Creating a new DataFrame with values counts for the lateness category
 new_df = (data_delay_without_nan['delay'].value_counts(normalize=True)*100).rename_axis('delay').reset_index(name='counts')
 
-
-
-
-
-
 # Creating a new DataFrame with values counts for the state category
 df_rental_state = (data_delay['state'].value_counts(normalize=True)*100).rename_axis('state').reset_index(name='counts')
-
-
 
 # Making a list of all the previous_ended_rental_id
 lst_previous_rental_id = data_delay["previous_ended_rental_id"]
@@ -103,56 +89,18 @@ df_merged_and_late_value_counts = (df_merged_and_late['state_y'].value_counts(no
 # Creating a new DataFrame with values counts of state for checkout on time
 df_merged_and_not_late_value_counts = (df_merged_and_not_late['state_y'].value_counts(normalize=True)*100).rename_axis('state_y').reset_index(name='counts')
 
-
-
-
 # Creating a new column to find if the checkout of the previous rental happened after the start of the following rental
 df_merged_and_late["wait_time_in_minutes"] = df_merged_and_late["delay_at_checkout_in_minutes_x"] - df_merged_and_late["time_delta_with_previous_rental_in_minutes_y"]
 
 # Keeping only cases when the checkout of the previous rental happened after the start of the following rental
 df_merged_way_too_late = df_merged_and_late[df_merged_and_late["wait_time_in_minutes"] > 0]
 
-
-
-
 # Creating a new DataFrame with values counts of state when the checkout of the previous rental happened after the start of the following rental
 df_merged_way_too_late2 = (df_merged_way_too_late['state_y'].value_counts(normalize=True)*100).rename_axis('state_y').reset_index(name='counts')
-
-
 
 # Checking if there is a difference in cancelation rate between mobile and connect checking type
 df_merged_and_late_mobile = df_merged_and_late[df_merged_and_late["checkin_type_x"] == "mobile"]
 df_merged_and_late_connect = df_merged_and_late[df_merged_and_late["checkin_type_x"] == "connect"]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 def main():
@@ -235,16 +183,9 @@ def analysis():
     st.write('\n')
     st.write('\n')
     
-
-
-    
-
-
     st.write (f"There are {number_of_cars} different cars in the dataset.")
     st.write (f"The average rental price of a car per day is {car_average_rental_price_per_day}$.")
     st.write (f"There are {number_of_rentals} rentals in the dataset.")
-
-
 
     # Bar chart - lateness on whole dataset after removal of NaN
     fig = px.bar(new_df, 
@@ -259,10 +200,6 @@ def analysis():
     fig.update_layout(title_x=0.5, yaxis={'visible': False}, xaxis={'visible': True}, legend_title="", title_text="Proportion of lateness - Whole Dataset after removal of NaN", template='plotly_dark', xaxis_title='', showlegend=False)
     st.plotly_chart(fig)
 
-
-
-
-
     # Bar chart - state on Whole dataset
     fig = px.bar(df_rental_state, 
                 x="state", 
@@ -275,8 +212,6 @@ def analysis():
     fig.update_traces(texttemplate='%{text:.2f}' + "%", textposition='outside')
     fig.update_layout(title_x=0.5, yaxis={'visible': False}, xaxis={'visible': True}, legend_title="", title_text="Proportion of rentals per state - Whole Dataset", template='plotly_dark', xaxis_title='', showlegend=False)
     st.plotly_chart(fig)
-
-
 
     st.write("Now I clean my dataset to keep only rows where I can find what the previous rental ID was to determine if the previous checkout was late or not.")
 
@@ -309,8 +244,6 @@ def analysis():
     st.write (f"{df_merged_way_too_late['state_y'].value_counts()[0]} ended rentals left when the checkout happened after the start of the following rental")
     st.write (f"{df_merged_way_too_late['state_y'].value_counts()[1]} canceled rentals left when the checkout happened after the start of the following rental")
 
-
-
     # Bar chart
     fig = px.bar(df_merged_way_too_late2, 
                 x="state_y", 
@@ -325,11 +258,8 @@ def analysis():
     fig.update_layout(title_x=0.5, yaxis={'visible': False}, xaxis={'visible': True}, legend_title="", title_text="Proportion of state when checkout happened after the expected start of the following rental", template='plotly_dark', xaxis_title='', showlegend=False)
     st.plotly_chart(fig)
 
-
-
     st.write (f"Connect checkin has a {round((df_merged_and_late_connect['state_y'].value_counts(normalize=True)*100)[1],2)}% cancelation rate")
     st.write (f"Mobile checkin has a {round((df_merged_and_late_mobile['state_y'].value_counts(normalize=True)*100)[1],2)}% cancelation rate")
-
 
     st.markdown("<h2 style='text-align: center;'>Conclusion from visualisations and data exploration</h2>", unsafe_allow_html=True)
 
@@ -362,13 +292,6 @@ def analysis():
     ################################################################ EXPLORATION AND VISUALISATION END
     ################################################################ EXPLORATION AND VISUALISATION END
 
-
-
-
-
-
-
-
 def variables():
     st.markdown("<h1 style='text-align: center;'>Try your own variables</h1>", unsafe_allow_html=True)
 
@@ -388,8 +311,6 @@ def variables():
     ################################################################ TEST YOUR OWN VARIABLES START
     ################################################################ TEST YOUR OWN VARIABLES START
 
-
-
     ################################################################ USER INPUT
     data_pricing = load_data_pricing()
     data_delay = load_data_delay()
@@ -399,8 +320,6 @@ def variables():
      ('connect', 'mobile', 'both'))
 
     new_delta = st.slider('Chose a minimum delta time', 0, 500, 30)
-
-
 
     ################################################################ DATA MANIPULATION
 
@@ -422,7 +341,6 @@ def variables():
     # Removing useless columns
     df_merged.drop(['state_x', 'previous_ended_rental_id_y','previous_ended_rental_id_x', 'time_delta_with_previous_rental_in_minutes_x', 'car_id_y', 'delay_at_checkout_in_minutes_y'], axis=1, inplace=True)
 
-
     # Creating a new DataFrame when checkout was late
     df_merged_and_late = df_merged[df_merged["delay_at_checkout_in_minutes_x"] > 0]
 
@@ -435,7 +353,6 @@ def variables():
     # Creating a new DataFrame with all the cases having the data I need
     df_good_cases = df_merged.copy()
     df_good_cases = df_good_cases[df_good_cases["state_y"] == "ended"]
-
 
     # If checkin_type is not both, I filter the two previous DataFrames
     if checkin_type != 'both':
@@ -451,7 +368,6 @@ def variables():
     # Creating a new DataFrame with only canceled state
     df_canceled_cases = df_merged[df_merged["state_y"] == "canceled"]
 
-
     # If checkin_type is not both, I filter my previous DataFrames
     if checkin_type != "both":
         df_canceled_cases = df_canceled_cases[df_canceled_cases["checkin_type_x"] == checkin_type]
@@ -461,10 +377,8 @@ def variables():
     # Finding amount of rows having all the data I need
     row_all_data = len(df_merged)
 
-
     # Creating a new DataFrame with canceled and late cases
     df_canceled_and_late_cases = df_canceled_cases[df_canceled_cases["delay_at_checkout_in_minutes_x"] > 0]
-
 
     # Creating a new delay column to find out if the next rental owner had to wait or not
     df_canceled_and_late_cases["delay"] = df_canceled_and_late_cases["delay_at_checkout_in_minutes_x"] - df_canceled_and_late_cases["time_delta_with_previous_rental_in_minutes_y"]
@@ -481,7 +395,6 @@ def variables():
     # Finding number of cancelation prevented
     cancelation_prevented = len(df_canceled_and_late_cases) - len(df_new_time_delta_bad_cases)
     
-
     # Finding percentage of cancelation prevented
     rate_cancelation_prevented = (cancelation_prevented) * 100 / len(df_canceled_and_late_cases)
 
@@ -494,7 +407,6 @@ def variables():
             'Amount':[money_lost, money_saved]}
 
     df = pd.DataFrame(data)
-
 
     ################################################################ DATA VISUALISATION
 
@@ -529,41 +441,20 @@ def variables():
     st.write (f"Keeping only ended cases we have {len(df_good_cases)} cases left.")
     st.write(f"With a minimum time delta of {new_delta} minutes we have {len(df_new_time_delta_good_cases)} cases left. We lost {len(df_good_cases) - len(df_new_time_delta_good_cases)} cases from our {len(df_good_cases)} cases.")
     st.write (f"{len(df_good_cases) - len(df_new_time_delta_good_cases)} represents {round((len(df_good_cases) - len(df_new_time_delta_good_cases))/len(df_good_cases)*100, 2)}% of the whole left cases.")
-
     st.write (f"If we try to apply these cleaning steps to our whole data set. We would be left with {len(df_true_good_cases)} cases")
-
     st.write (f"{round((len(df_good_cases) - len(df_new_time_delta_good_cases))/len(df_good_cases)*100, 2)}% would be a loss of {round(round((len(df_good_cases) - len(df_new_time_delta_good_cases))/len(df_good_cases)*100, 2) * len(df_true_good_cases) / 100)} rentals for {money_lost}$.")
-
     st.write('\n')
     st.write('\n')
     st.markdown("<h5 style='text-align: left;'>Canceled cases</h5>", unsafe_allow_html=True)
     st.write('\n')
-
     st.write (f"Keeping only canceled cases we have {len(df_canceled_cases)} cases left.")
-
     st.write (f"{len(df_canceled_and_late_cases)} of these cases where late and the next owner did not have the car on time.")
-
     st.write (f"With a minimum time delta of {new_delta} minutes we have {len(df_new_time_delta_bad_cases)} cases left. We saved {cancelation_prevented} cases from our {len(df_canceled_and_late_cases)} cases. ")
-    
     st.write (f"{cancelation_prevented} represents {round(rate_cancelation_prevented,2)}% of these {len(df_canceled_and_late_cases)} cases.")
-    
-
     st.write (f"If we try to apply these cleaning steps to our whole data set. We would be left with {round(total_estimated_cancelation_prevented)} cases of check-in type '{checkin_type}' that were canceled and the previous owner was so late that the checkout happened after the expected start of the next rental.")
-    
-    
-
     st.write (f"If we decide to consider that a cancelation due to lateness happens only when the new car owner has to wait, {round(rate_cancelation_prevented,2)}% would represents {round(round(total_estimated_cancelation_prevented) * (round(rate_cancelation_prevented)/100), 0)} rentals saved for {money_saved}$.")
-
-
-
-
-
-
     st.write (f"With {checkin_type} check-in type and a delta of {new_delta} we saved {money_saved} dollars but we lost {money_lost} dollars.")
 
-
-
-
     ################################################################ TEST YOUR OWN VARIABLES END
     ################################################################ TEST YOUR OWN VARIABLES END
     ################################################################ TEST YOUR OWN VARIABLES END
@@ -576,9 +467,6 @@ def variables():
     ################################################################ TEST YOUR OWN VARIABLES END
     ################################################################ TEST YOUR OWN VARIABLES END
     ################################################################ TEST YOUR OWN VARIABLES END
-
-
-
 
 if __name__ == "__main__":
     main()
