@@ -15,7 +15,7 @@ description = """
 
 """
 
-mlflow.set_tracking_uri("https://my-get-around.herokuapp.com/")
+# mlflow.set_tracking_uri("https://my-get-around.herokuapp.com/")
 
 tag_metadata = [
     {
@@ -58,25 +58,25 @@ async def index():
 
     return message
 
-@app.post("/predict2", tags=["Machine Learning"])
-async def predict(predictionFeatures: PredictionFeatures):
-    """
-    Prediction of rental price per day for a car
-    """
-    import pandas as pd 
-    # Read data 
-    car_price = pd.DataFrame(dict(predictionFeatures), index=[0])
+# @app.post("/predict2", tags=["Machine Learning"])
+# async def predict(predictionFeatures: PredictionFeatures):
+#     """
+#     Prediction of rental price per day for a car
+#     """
+#     import pandas as pd 
+#     # Read data 
+#     car_price = pd.DataFrame(dict(predictionFeatures), index=[0])
 
-    # # Log model from mlflow 
-    logged_model = 'runs:/b20787929fb445e3ad0574ad722657d4/car_price_estimator'
+#     # # Log model from mlflow 
+#     logged_model = 'runs:/b20787929fb445e3ad0574ad722657d4/car_price_estimator'
 
-    # Load model as a PyFuncModel.
-    loaded_model = mlflow.pyfunc.load_model(logged_model)
-    prediction = loaded_model.predict(car_price)
+#     # Load model as a PyFuncModel.
+#     loaded_model = mlflow.pyfunc.load_model(logged_model)
+#     prediction = loaded_model.predict(car_price)
 
-    # Format response
-    response = {"prediction": prediction.tolist()[0]}
-    return response
+#     # Format response
+#     response = {"prediction": prediction.tolist()[0]}
+#     return response
 
 @app.post("/predict", tags=["Machine Learning"])
 async def predict(predictionFeatures: PredictionFeatures):
