@@ -431,12 +431,13 @@ def variables():
     st.write('\n')
     st.write('\n')
     st.write('\n')
-
     st.write (f"Check-in type: {checkin_type} = {len(data_delay)} cases")
     st.write (f"Cleaning phase: I keep only rentals where we can see the previous rental id and if it was late or not, there are {df_merged.shape[0]} cases left.")
     st.write('\n')
     st.write('\n')
+
     st.markdown("<h5 style='text-align: left;'>Ended cases</h5>", unsafe_allow_html=True)
+
     st.write('\n')
     st.write (f"Keeping only ended cases we have {len(df_good_cases)} cases left.")
     st.write(f"With a minimum time delta of {new_delta} minutes we have {len(df_new_time_delta_good_cases)} cases left. We lost {len(df_good_cases) - len(df_new_time_delta_good_cases)} cases from our {len(df_good_cases)} cases.")
@@ -445,7 +446,9 @@ def variables():
     st.write (f"{round((len(df_good_cases) - len(df_new_time_delta_good_cases))/len(df_good_cases)*100, 2)}% would be a loss of {round(round((len(df_good_cases) - len(df_new_time_delta_good_cases))/len(df_good_cases)*100, 2) * len(df_true_good_cases) / 100)} rentals for {money_lost}$.")
     st.write('\n')
     st.write('\n')
+
     st.markdown("<h5 style='text-align: left;'>Canceled cases</h5>", unsafe_allow_html=True)
+
     st.write('\n')
     st.write (f"Keeping only canceled cases we have {len(df_canceled_cases)} cases left.")
     st.write (f"{len(df_canceled_and_late_cases)} of these cases where late and the next owner did not have the car on time.")
@@ -453,6 +456,10 @@ def variables():
     st.write (f"{cancelation_prevented} represents {round(rate_cancelation_prevented,2)}% of these {len(df_canceled_and_late_cases)} cases.")
     st.write (f"If we try to apply these cleaning steps to our whole data set. We would be left with {round(total_estimated_cancelation_prevented)} cases of check-in type '{checkin_type}' that were canceled and the previous owner was so late that the checkout happened after the expected start of the next rental.")
     st.write (f"If we decide to consider that a cancelation due to lateness happens only when the new car owner has to wait, {round(rate_cancelation_prevented,2)}% would represents {round(round(total_estimated_cancelation_prevented) * (round(rate_cancelation_prevented)/100), 0)} rentals saved for {money_saved}$.")
+
+    st.markdown("<h5 style='text-align: left;'>Conclusion</h5>", unsafe_allow_html=True)
+
+    st.write('\n')
     st.write (f"With {checkin_type} check-in type and a delta of {new_delta} we saved {money_saved} dollars but we lost {money_lost} dollars.")
 
     ################################################################ TEST YOUR OWN VARIABLES END
