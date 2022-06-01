@@ -15,7 +15,8 @@ description = """
 
 """
 
-# mlflow.set_tracking_uri("https://my-get-around.herokuapp.com/")
+mlflow.set_tracking_uri("https://get-around-mlflow.herokuapp.com/")
+
 
 tag_metadata = [
     {
@@ -54,29 +55,9 @@ class PredictionFeatures(BaseModel):
 @app.get("/")
 async def index():
 
-    message = "Hello this is my test API. If you want to learn more, check out documentation of the api at `/docs`"
+    message = "Hello this is my own API. If you want to learn more, check out documentation of the api at `/docs`"
 
     return message
-
-# @app.post("/predict2", tags=["Machine Learning"])
-# async def predict(predictionFeatures: PredictionFeatures):
-#     """
-#     Prediction of rental price per day for a car
-#     """
-#     import pandas as pd 
-#     # Read data 
-#     car_price = pd.DataFrame(dict(predictionFeatures), index=[0])
-
-#     # # Log model from mlflow 
-#     logged_model = 'runs:/b20787929fb445e3ad0574ad722657d4/car_price_estimator'
-
-#     # Load model as a PyFuncModel.
-#     loaded_model = mlflow.pyfunc.load_model(logged_model)
-#     prediction = loaded_model.predict(car_price)
-
-#     # Format response
-#     response = {"prediction": prediction.tolist()[0]}
-#     return response
 
 @app.post("/predict", tags=["Machine Learning"])
 async def predict(predictionFeatures: PredictionFeatures):
@@ -85,21 +66,16 @@ async def predict(predictionFeatures: PredictionFeatures):
     """
     # Read data 
     car_price = pd.DataFrame(dict(predictionFeatures), index=[0])
+    # # Log model from mlflow 
+    logged_model = 'runs:/b20787929fb445e3ad0574ad722657d4/car_price_estimator'
 
-    s3client = boto3.client('s3')
+    # Load model as a PyFuncModel.
+    loaded_model = mlflow.pyfunc.load_model(logged_model)
+    prediction = loaded_model.predict(car_price)
 
-    response = s3client.get_object(Bucket='guigui2', Key='1/b20787929fb445e3ad0574ad722657d4/artifacts/model/model.pkl')
-
-    body = response['Body'].read()
-    model = pickle.loads(body)
-
-    prediction = model.predict(car_price)
-
-    # Open the bucket to get the csv file and retransform it into a DataFrame
-
+    # Format response
     response = {"prediction": prediction.tolist()[0]}
     return response
-
 
 if __name__=="__main__":
     uvicorn.run(app, host="0.0.0.0", port=4000, debug=True, reload=True) # Here you define your web server to run the `app` variable (which contains FastAPI instance), with a specific host IP (0.0.0.0) and port (4000)
