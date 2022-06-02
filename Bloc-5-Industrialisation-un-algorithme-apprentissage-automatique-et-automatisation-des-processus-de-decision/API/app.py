@@ -15,7 +15,7 @@ description = """
 
 """
 
-mlflow.set_tracking_uri("https://get-around-mlflow.herokuapp.com/")
+mlflow.set_tracking_uri("https://mlflow-getaround.herokuapp.com/")
 
 
 tag_metadata = [
@@ -31,7 +31,7 @@ app = FastAPI(
     version="0.1",
     contact={
         "name": "GetAround",
-        "url": "https://get-around-mlflow.herokuapp.com/",
+        "url": "https://mlflow-getaround.herokuapp.com/",
     },
     openapi_tags=tag_metadata
 )
@@ -67,7 +67,7 @@ async def predict(predictionFeatures: PredictionFeatures):
     # Read data 
     car_price = pd.DataFrame(dict(predictionFeatures), index=[0])
     # # Log model from mlflow 
-    logged_model = 'runs:/b20787929fb445e3ad0574ad722657d4/car_price_estimator'
+    logged_model = 'runs:/f7d5061de4e74c6fa52c91d76f522bfa/car_price_estimator'
 
     # Load model as a PyFuncModel.
     loaded_model = mlflow.pyfunc.load_model(logged_model)
