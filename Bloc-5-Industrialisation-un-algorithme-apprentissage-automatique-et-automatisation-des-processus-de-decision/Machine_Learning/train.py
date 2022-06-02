@@ -25,10 +25,6 @@ if __name__ == "__main__":
     run = client.create_run(experiment.experiment_id) # Creates a new run for a given experiment
 
 
-
-    
-    
-
     # Call mlflow autolog
     mlflow.sklearn.autolog()
 
@@ -68,7 +64,6 @@ if __name__ == "__main__":
         ])
 
     # Instantiating a linear regression model
-
     model = Pipeline(steps=[
     ("Preprocessing", preprocessor),
     ("Regressor",LinearRegression())
