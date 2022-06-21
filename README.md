@@ -6,7 +6,7 @@ Link to diploma: https://www.francecompetences.fr/recherche/rncp/35288/
 [Bloc 2](https://berengerqueune.github.io/bloc-2.html)  
 [Bloc 3](https://berengerqueune.github.io/bloc-3.html)  
 [Bloc 4](https://berengerqueune.github.io/bloc-4.html)  
-[Bloc 5 incoming](https://berengerqueune.github.io/index.html)  
-[Bloc 6 incoming](https://berengerqueune.github.io/index.html)  
+[Bloc 5](https://berengerqueune.github.io/bloc-5.html)  
+[Bloc 6](https://berengerqueune.github.io/bloc-6.html)  
 
 
